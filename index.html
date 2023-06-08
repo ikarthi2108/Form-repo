@@ -13,14 +13,15 @@
         crossorigin="anonymous"></script>
 
 
-        <style>
-            body{
-                 background-image: url(assests/bg5.jpg);
-                 background-repeat: no-repeat;
-                 background-size: cover;
-            }
-        </style>
-        <script src="validation.js"></script>
+    <style>
+        body {
+            background-image: url(assests/bg5.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+    </style>
+    <script src="validation.js"> </script>
 </head>
 
 <body>
@@ -28,24 +29,25 @@
         <h1>Player Registration Form</h1>
         <form id="validationform" class="row g-3">
             <div class="col-md-6">
-                <label for="firstname" class="form-label "><b>Full Name</b></label>
-                <input type="text" id="firstname" name="fname" class="form-control" >
+                <label for="firstname" class="form-label"><b>Full Name</b></label>
+                <input type="text" id="firstname" name="fname" class="form-control">
             </div>
             <div class="col-md-6">
                 <label for="dob" class="form-label"><b>Date Of Birth</b></label>
-                <input type="date" id="dob" class="form-control" >
+                <input type="date" id="dob" class="form-control" onchange="calculate()">
+                <small id="ageMessage" class="form-text text-primary fw-bold"></small>
             </div>
             <div class="col-md-6">
                 <label for="cnumber" class="form-label"><b>Contact number</b></label>
-                <input type="tel" id="cnumber" class="form-control" >
+                <input type="tel" id="cnumber" class="form-control">
             </div>
             <div class="col-md-6">
                 <label for="mail" class="form-label"><b>Email</b></label>
-                <input type="email" id="mail" class="form-control" >
+                <input type="email" id="mail" class="form-control">
             </div>
             <div class="col-md-6">
                 <label for="State" class="form-label"><b>State</b></label>
-                <select class="form-select" id="state" >
+                <select class="form-select" id="state">
                     <option selected disabled value="">Choose State</option>
                     <option>Andra pradesh</option>
                     <option>karnataka</option>
@@ -57,7 +59,7 @@
             </div>
             <div class="col-md-6">
                 <label for="Gender" class="form-label"><b>Gender</b></label>
-                <select class="form-select" id="Gender" >
+                <select class="form-select" id="Gender">
                     <option selected disabled value="">Gender</option>
                     <option>Male</option>
                     <option>Female</option>
@@ -65,57 +67,84 @@
                 </select>
             </div>
             <div class="col-md-6">
-                <label for="file" class="form-label"><b>Upload Photo(Passport size*)</b></label>
-                <input type="file" name="file" id="file" class="form-control" aria-label="file example" accept="image/*" onchange="previewImage()">
+                <label for="file" class="form-label"><b>Upload Photo (Passport size*)</b></label>
+                <input type="file" name="file" id="file" class="form-control" aria-label="file example" accept="image/*"
+                    onchange="previewImage()">
                 <img id="preview">
             </div>
-            <div class="col-md-6">
-                <label for="category" class="form-label"><b>Player Category</b></label>
-                <select class="form-select" id="category" >
-                    <option selected disabled value="">Category</option>
-                    <option>Batting</option>
-                    <option>Bowling</option>
-                    <option>All Rounder</option>
-                    <option>Wicket keeper/Batsman</option></select>
-            </div>
-
             <div class="col-md-6">
 
                 <label for="section" class="form-label"><b>Teams Played</b></label><br>
                 <input class="form-check-input" type="checkbox" value="" id="section">
-                <label class="form-check-label me-3" for="section">
+                <label class="form-check-label me-3" id="section" for="section">
                     U-19(State)
                 </label>
                 <input class="form-check-input" type="checkbox" value="" id="section">
-                <label class="form-check-label me-3" for="section">
+                <label class="form-check-label me-3" id="section" for="section">
                     U-23(state)
                 </label>
                 <input class="form-check-input" type="checkbox" value="" id="section">
-                <label class="form-check-label me-3" for="section">
+                <label class="form-check-label me-3" id="section" for="section">
                     U-25(state)
                 </label>
                 <input class="form-check-input" type="checkbox" value="" id="section">
-                <label class="form-check-label me-3" for="section">
+                <label class="form-check-label me-3" id="section" for="section">
                     U-27(state)
                 </label>
                 <input class="form-check-input" type="checkbox" value="" id="section">
-                <label class="form-check-label" for="section">
+                <label class="form-check-label" id="section" for="section">
                     National Team
                 </label>
             </div>
-            
+
             <div class="col-md-6">
-                <label for="hostel" class="form-label"><b>Accomadation</b></label><br>
-                <input type="radio" class="form-check-input" id="hostel" name="radio-stacked" >
-                <label class="form-check-label" for="hostel">Yes,Needed</label><br>
-                <input type="radio" class="form-check-input mt-2" id="hostel" name="radio-stacked" >
-                <label class="form-check-label mt-1" for="hostel">Not Needed</label>
+                <label for="category" class="form-label"><b>Player Category</b></label>
+                <select class="form-select" id="category" onchange="showOtherCategory()">
+                    <option selected disabled value="">Category</option>
+                    <option>Batting</option>
+                    <option>Bowling</option>
+                    <option>All Rounder</option>
+                    <option>Others</option>
+                </select>
             </div>
-            
-            
+            <div class="col-md-6" id="otherCategoryInput" style="display: none;">
+                <label for="otherCategory" class="form-label"><b>Other Category</b></label>
+                <input type="text" id="otherCategory" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="practice" class="form-label"><b>Preffered Practice Session:</b></label>
+                <select class="form-select" id="practice" onchange=" showTrainingTiming() ">
+                    <option selected disabled value="">--Practice Session--</option>
+                    <option>Morning</option>
+                    <option>Evening</option>
+                </select>
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                <p id="trainingTimingMorning" style="display: none;color: darkblue"><b>*Your training timing is:</b> 5:30 am to 8:30 am</p>
+                <p id="trainingTimingEvening" style="display: none;color:darkblue;"><b>*Your training timing is:</b> 4:00 pm to 6:30 pm</p>
+           </div>
+           <div class="col-md-6">
+            <label for="practicetime" class="form-label"><b>Entry Time</b></label>
+            <input type="time" id="practice1" name="practicetime" class="form-control" onchange="calculatePracticeHours()">
+          </div>
+          <div class="col-md-6">
+            <p id="practiceHours" class="mt-5  fw-bold" style="color: darkblue;"></p>
+          </div>
+          
            
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                  <label class="form-check-label" for="invalidCheck">
+                    Agree to terms and conditions
+                  </label>
+                  
+                </div>
+              </div>
+
             <div class="col-md-12">
-                <button type="submit" class="btn btn-primary" onclick="validation()">Submit</button>
+                <button type="button" class="btn btn-info" onclick="display()">Submit</button>
             </div>
         </form>
     </div>
